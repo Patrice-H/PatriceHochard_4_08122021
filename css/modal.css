@@ -226,6 +226,9 @@ input {
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
+.formData-field label {
+  padding-top: 6px;
+}
 /* 
 input[data-error]::after {
     content: attr(data-error);
