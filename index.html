@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="utf-8" />
     <title>Reservation</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="./css/modal.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link
-      href="https://fonts.googleapis.com/css?family=DM+Sans"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=DM+Sans" />
+    <link rel="stylesheet" href="./css/modal.css" />
   </head>
   <body>
     <div class="topnav" id="myTopnav">
@@ -56,10 +53,10 @@
         <div class="content">
           <span class="close"></span>
           <div class="modal-body">
-            <form name="reserve" action="index.html" method="get" onsubmit="return validate();">
+            <form name="reserve" action="index.html" method="get">
               <div class="formData formData-field">
                 <label for="first">Prénom</label><br>
-                <input class="text-control" type="text" id="first" name="first" minlength="2" /><br>
+                <input class="text-control" type="text" id="first" name="first" /><br>
               </div>
               <div class="formData formData-field">
                 <label for="last">Nom</label><br>
@@ -71,11 +68,11 @@
               </div>
               <div class="formData formData-field">
                 <label for="birthdate">Date de naissance</label><br>
-                <input class="text-control" type="date" id="birthdate" name="birthdate" /><br>
+                <input class="text-control" type="date" id="birthdate" name="birthdate" placeholder="jj/mm/aaaa" /><br>
               </div>
               <div class="formData formData-field">
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
-                <input class="text-control" type="number" id="quantity" name="quantity" min="0" max="99">
+                <input class="text-control" type="number" id="quantity" name="quantity" min="0" max="99" />
               </div>
               <p class="text-label">Quelles villes ?</p>
               <div class="formData">
@@ -112,20 +109,20 @@
               </div>
 
               <div class="formData">
-                <input class="checkbox-input" type="checkbox" id="checkbox1" checked />
-                <label class="checkbox2-label" for="checkbox1" required>
+                <input class="checkbox-input" type="checkbox" id="checkbox1" />
+                <label class="checkbox2-label" for="checkbox1">
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
                 <br>
-                <input class="checkbox-input" type="checkbox" id="checkbox2" />
+                <input class="checkbox-input" type="checkbox" id="checkbox2" name="subcribe" value="next events" />
                 <label class="checkbox2-label" for="checkbox2">
                   <span class="checkbox-icon"></span>
                   Je souhaite être prévenu des prochains évènements.
                 </label>
                 <br>
               </div>
-              <input class="btn-submit button" type="submit" value="C'est parti" />
+              <input class="btn-submit button" type="submit" id="submit-btn" value="C'est parti" />
             </form>
           </div>
         </div>
