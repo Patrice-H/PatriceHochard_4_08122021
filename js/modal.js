@@ -19,28 +19,40 @@ const closeModal = () => {
   modalbg.style.display = "none";
 };
 
+const displayErrorValidation = (field, condition, key = field.id) => {
+  if (condition) {
+    field.parentElement.dataset.error = errorMessages[key];
+    field.parentElement.dataset.errorVisible = "true";
+    field.parentElement.removeAttribute("data-valid-visible");
+  }
+  else {
+    delete errorMessages[key];
+    field.parentElement.removeAttribute("data-error");
+    field.parentElement.removeAttribute("data-error-visible");
+    field.parentElement.dataset.validVisible = "true";
+  }
+}
+
 const fillingControl = (field) => {
   if (field.value !== "") {
-    delete errorMessages[field.id];
+    displayErrorValidation(field, false);
 
     return true;
   }
-  errorMessages[field.id] = 
-    "Merci de renseigner votre " + 
-    field.labels[0].textContent.toLowerCase();
+  errorMessages[field.id] = "Merci de renseigner votre " + field.labels[0].textContent.toLowerCase();
+  displayErrorValidation(field, true);
 
-    return false;
+  return false;
 }
 
 const lengthControl = (field) => {
   if(field.value.length >= 2) {
-    delete errorMessages[field.id];
+    displayErrorValidation(field, false);
 
     return true;
   }
-  errorMessages[field.id] = 
-    "Veuillez entrer 2 caractères ou plus pour votre " + 
-    field.labels[0].textContent.toLowerCase();
+  errorMessages[field.id] = "Veuillez entrer 2 caractères ou plus pour votre " + field.labels[0].textContent.toLowerCase();
+  displayErrorValidation(field, true);
 
   return false;
 };
@@ -48,23 +60,24 @@ const lengthControl = (field) => {
 const emailFormatControl = (field) => {
   const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/g;
   if (pattern.test(field.value)) {
-    delete errorMessages[field.id];
+    displayErrorValidation(field, false);
 
     return true;
   }
-  errorMessages[field.id] = "Veuillez entrer un " + 
-  field.labels[0].textContent + " valide";
+  errorMessages[field.id] = "Veuillez saisir un e-mail valide";
+  displayErrorValidation(field, true);
 
   return false;
 };
 
 const numericFormatControl = (field) => {
   if (field.value !== "" && Number.isInteger(Number(field.value))) {
-    delete errorMessages[field.id];
+    displayErrorValidation(field, false);
 
     return true;
   }
-  errorMessages[field.id] = "Veuillez entrer un nombre entier";
+  errorMessages[field.id] = "Veuillez saisir un nombre entier";
+  displayErrorValidation(field, true);
 
   return false;
 }
@@ -72,12 +85,14 @@ const numericFormatControl = (field) => {
 const letterFormatControl = (field) => {
   const pattern = /^[a-zA-Zäëïöüéè-]+$/;
   if (pattern.test(field.value)) {
-    delete errorMessages[field.id];
+    displayErrorValidation(field, false);
 
     return true;
   }
-  errorMessages[field.id] = "Votre " + field.labels[0].textContent.toLowerCase() + 
-    " ne doit comporter que des lettres";
+  errorMessages[field.id] = "Votre " + field.labels[0].textContent.toLowerCase() + " ne doit comporter que des lettres";
+  displayErrorValidation(field, true);
+
+  return false;
 }
 
 const dateFormatControl = (field) => {
@@ -90,34 +105,38 @@ const dateFormatControl = (field) => {
     birth = year + "-" + month + "-" + day;
   }
   if (pattern.test(birth)) {
-    delete errorMessages[field.id];
+    displayErrorValidation(field, false);
 
     return true;
   }
-  errorMessages[field.id] = "Votre " + field.labels[0].textContent.toLowerCase() + 
-  " doit correspondre au format 'JJ/MM/AAAA'";
+  errorMessages[field.id] = "Votre " + field.labels[0].textContent.toLowerCase() + " doit correspondre au format 'JJ/MM/AAAA'";
+  displayErrorValidation(field, true);
+
+  return false;
 }
 
 const locationSelectionControl = (field) => {
   for (let i = 0; i < field.length; i++) {
     if (field[i].checked) {
-      delete errorMessages[field[0].name];
+      displayErrorValidation(field[0], false, field[0].name);
 
       return true;
     } 
   }
   errorMessages[field[0].name] = "Vous devez choisir un lieu";
+  displayErrorValidation(field[0], true, field[0].name);
 
   return false;
 }
 
 const conditionsApprovalControl = (field) => {
   if (field.checked) {
-    delete errorMessages[field.id];
+    displayErrorValidation(field, false);
 
     return true;
   }
   errorMessages[field.id] = "Vous devez approuver les conditions d'utilisation";
+  displayErrorValidation(field, true);
 
   return false;
 }
@@ -198,8 +217,61 @@ const birthdate = document.getElementById("birthdate");
 const eventLocation = document.getElementsByName("location");
 const usingConditions = document.getElementById("checkbox1");
 const submitBtn = document.getElementById("submit-btn");
+const formInputs = document.querySelector("input");
 
 // modal events
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 modalClose.addEventListener("click", closeModal);
-submitBtn.addEventListener("click", (evt) => { validate(evt); });
+submitBtn.addEventListener("click", (evt) => {
+  validate(evt);
+});
+firstName.addEventListener("focus", (evt) => {
+  firstNameConformity();
+  errorsControl(evt);
+});
+firstName.addEventListener("input", (evt) => {
+  firstNameConformity();
+  errorsControl(evt);
+});
+lastName.addEventListener("focus", (evt) => {
+  lastNameConformity();
+  errorsControl(evt);
+});
+lastName.addEventListener("input", (evt) => {
+  lastNameConformity();
+  errorsControl(evt);
+});
+email.addEventListener("focus", (evt) => {
+  emailConformity();
+  errorsControl(evt);
+});
+email.addEventListener("input", (evt) => {
+  emailConformity();
+  errorsControl(evt);
+});
+birthdate.addEventListener("focus", (evt) => {
+  birthDateConformity();
+  errorsControl(evt);
+});
+birthdate.addEventListener("input", (evt) => {
+  birthDateConformity();
+  errorsControl(evt);
+});
+quantity.addEventListener("focus", (evt) => {
+  quantityConformity();
+  errorsControl(evt);
+});
+quantity.addEventListener("input", (evt) => {
+  quantityConformity();
+  errorsControl(evt);
+});
+for (let i = 0; i < eventLocation.length; i++) {
+  eventLocation[i].addEventListener("change", (evt) => {
+    locationConformity();
+    errorsControl(evt);
+  });
+}
+usingConditions.addEventListener("change", (evt) => {
+  usingConditionsConformity();
+  errorsControl(evt);
+});
