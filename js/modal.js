@@ -8,17 +8,27 @@ const editNav = () => {
     x.className = "topnav";
   }
 };
-
-// launch modal form
+/**
+ * @function launchModal
+ * @description Display the modal window
+ */
 const launchModal = () => {
   modalbg.style.display = "block";
 };
-
-// close modal form
+/**
+ * @function closeModal
+ * @description Close the modal window
+ */
 const closeModal = () => {
   modalbg.style.display = "none";
 };
-
+/**
+ * @function displayErrorValidation
+ * @description Display below specific input the error if condition is true
+ * @param {HTMLElement} field 
+ * @param {boolean} condition 
+ * @param {string} key 
+ */
 const displayErrorValidation = (field, condition, key = field.id) => {
   if (condition) {
     field.parentElement.dataset.error = errorMessages[key];
@@ -32,7 +42,13 @@ const displayErrorValidation = (field, condition, key = field.id) => {
     field.parentElement.dataset.validVisible = "true";
   }
 }
-
+/**
+ * @function fillingControl
+ * @description Control if a value is entered in input, generate a message otherwise
+ * @see {@link displayErrorValidation}
+ * @param {HTMLElement} field 
+ * @returns {boolean} Return true if a value is entered, false otherwise
+ */
 const fillingControl = (field) => {
   if (field.value !== "") {
     displayErrorValidation(field, false);
@@ -44,7 +60,13 @@ const fillingControl = (field) => {
 
   return false;
 }
-
+/**
+ * @function lengthControl
+ * @description Control if the input value matches to the minimum length, generate a message otherwise
+ * @see {@link displayErrorValidation}
+ * @param {HTMLElement} field 
+ * @returns {boolean} Return true if the input value matches, false otherwise 
+ */
 const lengthControl = (field) => {
   if(field.value.length >= 2) {
     displayErrorValidation(field, false);
@@ -56,7 +78,13 @@ const lengthControl = (field) => {
 
   return false;
 };
-
+/**
+ * @function emailFormatControl
+ * @description Control if the input value matches with the pattern, generate a message otherwise
+ * @see {@link displayErrorValidation}
+ * @param {HTMLElement} field 
+ * @returns {boolean} Return true if the input value matches, false otherwise
+ */
 const emailFormatControl = (field) => {
   const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/g;
   if (pattern.test(field.value)) {
@@ -69,7 +97,13 @@ const emailFormatControl = (field) => {
 
   return false;
 };
-
+/**
+ * @function numericFormatControl
+ * @description Control if the input value is a number, generate a message otherwise
+ * @see {@link displayErrorValidation}
+ * @param {HTMLElement} field 
+ * @returns {boolean} Return true if the input value is a number, false otherwise
+ */
 const numericFormatControl = (field) => {
   if (field.value !== "" && Number.isInteger(Number(field.value))) {
     displayErrorValidation(field, false);
@@ -81,7 +115,13 @@ const numericFormatControl = (field) => {
 
   return false;
 }
-
+/**
+ * @function letterFormatControl
+ * @description Control if the input value matches with the pattern, generate a message otherwise
+ * @see {@link displayErrorValidation}
+ * @param {HTMLElement} field
+ * @returns {boolean} Return true if the input value matches, false otherwise
+ */
 const letterFormatControl = (field) => {
   const pattern = /^[a-zA-Zäëïöüéè-]+$/;
   if (pattern.test(field.value)) {
@@ -94,7 +134,13 @@ const letterFormatControl = (field) => {
 
   return false;
 }
-
+/**
+ * @function dateFormatControl
+ * @description Control if the input value matches with the pattern, generate a message otherwise
+ * @see {@link displayErrorValidation}
+ * @param {HTMLElement} field
+ * @returns {boolean} Return true if the input value matches, false otherwise
+ */
 const dateFormatControl = (field) => {
   const pattern = /^\d{4}-(((0)[1-9])|((1)[0-2]))-([0-2][0-9]|(3)[0-1])$/;
   let birth = field.value;
@@ -114,7 +160,13 @@ const dateFormatControl = (field) => {
 
   return false;
 }
-
+/**
+ * @function locationSelectionControl
+ * @description Control if a radio button is checked, generate a message otherwise
+ * @see {@link displayErrorValidation}
+ * @param {HTLMElement} field
+ * @returns {boolean} Return true if a radio button is checked, false otherwise
+ */
 const locationSelectionControl = (field) => {
   for (let i = 0; i < field.length; i++) {
     if (field[i].checked) {
@@ -128,7 +180,13 @@ const locationSelectionControl = (field) => {
 
   return false;
 }
-
+/**
+ * @function conditionApprovalControl
+ * @description Control if the checkbox is checked, generate a message otherwise
+ * @see {@link displayErrorValidation}
+ * @param {HTMLElement} field
+ * @returns {boolean} Return true if the checkbox is checked, false otherwise
+ */
 const conditionsApprovalControl = (field) => {
   if (field.checked) {
     displayErrorValidation(field, false);
@@ -140,16 +198,28 @@ const conditionsApprovalControl = (field) => {
 
   return false;
 }
-
+/**
+ * @function errorsControl
+ * @description Control the amount of errors of all inputs form
+ * @param {event} evt
+ * @returns {boolean} Returns true if no errors detected, false otherwise
+ */
 const errorsControl = (evt) => {
   if (Object.keys(errorMessages).length === 0) {
+
     return true;
   }
   evt.preventDefault();
 
   return false;
 };
-
+/**
+ * @function firstNameConformity
+ * @description Launch control functions to check the conformity of first name input
+ * @see {@link fillingControl}
+ * @see {@link letterFormatControl}
+ * @see {@link lengthControl}
+ */
 const firstNameConformity = () => {
   if (fillingControl(firstName)) {
     if (letterFormatControl(firstName)) {
@@ -157,7 +227,13 @@ const firstNameConformity = () => {
     }
   }
 };
-
+/**
+ * @function lastNameConformity
+ * @description Launch control functions to check the conformity of last name input
+ * @see {@link fillingControl}
+ * @see {@link letterFormatControl}
+ * @see {@link lengthControl}
+ */
 const lastNameConformity = () => {
   if (fillingControl(lastName)) {
     if (letterFormatControl(lastName)) {
@@ -165,32 +241,67 @@ const lastNameConformity = () => {
     }
   }
 };
-
+/**
+ * @function emailConformity
+ * @description Launch control functions to check the conformity of email input
+ * @see {@link fillingControl}
+ * @see {@link emailFormatControl}
+ */
 const emailConformity = () => {
   if (fillingControl(email)) {
     emailFormatControl(email);
   }
 };
-
+/**
+ * @function birthDateConformity
+ * @description Launch control functions to check the conformity of birthdate input
+ * @see {@link fillingControl}
+ * @see {@link dateFormatControl}
+ */
 const birthDateConformity = () => {
   if (fillingControl(birthdate)) {
     dateFormatControl(birthdate);
   }
   
 }
-
+/**
+ * @function quantityConformity
+ * @description Launch a control function to check the conformity of amount of participation input
+ * @see {@link numericFormatControl}
+ */
 const quantityConformity = () => {
   numericFormatControl(quantity);
 }
-
+/**
+ * @function locationConformity
+ * @description Launch a control function to check the conformity of event location input
+ * @see {@link locationSelectionControl}
+ */
 const locationConformity = () => {
   locationSelectionControl(eventLocation);
 }
-
+/**
+ * @function usingConditionsConformity
+ * @description Launch a control function to check the conformity of using conditions input
+ * @see {@link conditionsApprovalControl}
+ */
 const usingConditionsConformity = () => {
   conditionsApprovalControl(usingConditions);
 }
-
+/**
+ * @function validate
+ * @description Launch functions to check the conformity of all inputs form before validation
+ * @see {@link firstNameConformity}
+ * @see {@link lastNameConformity}
+ * @see {@link emailConformity}
+ * @see {@link birthDateConformity}
+ * @see {@link quantityConformity}
+ * @see {@link locationConformity}
+ * @see {@link usingConditionsConformity}
+ * @see {@link errorsControl}
+ * @param {MouseEvent} evt
+ * @returns {boolean}  Result of the returned function
+ */
 const validate = (evt) => {
   firstNameConformity();
   lastNameConformity();
@@ -200,7 +311,6 @@ const validate = (evt) => {
   locationConformity();
   usingConditionsConformity();
 
-  console.log(errorMessages);
   return errorsControl(evt);
 };
 
@@ -219,7 +329,7 @@ const usingConditions = document.getElementById("checkbox1");
 const submitBtn = document.getElementById("submit-btn");
 const formInputs = document.querySelector("input");
 
-// modal events
+// Modal window events
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 modalClose.addEventListener("click", closeModal);
 submitBtn.addEventListener("click", (evt) => {
