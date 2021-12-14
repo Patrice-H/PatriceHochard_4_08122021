@@ -48,10 +48,10 @@
           je m'inscris
         </button>
       </div>
-
-      <div class="bground">
+      <!-- Modal window -->
+      <div class="bground modal">
         <div class="content">
-          <span class="close"></span>
+          <span class="close" id="close-modal"></span>
           <div class="modal-body">
             <form name="reserve" action="index.html" method="get">
               <div class="formData formData-field">
@@ -113,7 +113,6 @@
                 </label>
                 <i class="fa fa-check"></i><br>
               </div>
-
               <div class="formData">
                 <input class="checkbox-input" type="checkbox" id="checkbox1" />
                 <label class="checkbox2-label" for="checkbox1">
@@ -133,6 +132,15 @@
               </div>
               <input class="btn-submit button" type="submit" id="submit-btn" value="C'est parti" />
             </form>
+          </div>
+        </div>
+      </div>
+      <div class="bground confirmation">
+        <div class="content">
+          <span class="close" id="close-confirmation"></span>
+          <div class="confirmation-body">
+            <p>Merci ! <br> Votre réservation a été reçue.</p>
+            <button class="btn-submit button" id="confirmation-btn">Fermer</button>
           </div>
         </div>
       </div>

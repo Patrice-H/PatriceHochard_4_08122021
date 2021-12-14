@@ -23,6 +23,24 @@ const closeModal = () => {
   modalbg.style.display = "none";
 };
 /**
+ * @function launchConfirmation
+ * @description Read the storage session. If exists, display the confirmation window
+ */
+const launchConfirmation = () => {
+  let submittedForm = sessionStorage.getItem('submittedForm');
+  if (submittedForm) {
+    confirmationBg.style.display = "block";
+  }
+}
+/**
+ * @function closeConfirmation
+ * @description Close the confirmation window and remove the storage session
+ */
+const closeConfirmation = () => {
+  confirmationBg.style.display = "none";
+  sessionStorage.removeItem('submittedForm');
+}
+/**
  * @function displayErrorValidation
  * @description Display below specific input the error if condition is true
  * @param {HTMLElement} field 
@@ -201,7 +219,7 @@ const conditionsApprovalControl = (field) => {
 /**
  * @function errorsControl
  * @description Control the amount of errors of all inputs form
- * @param {event} evt
+ * @param {MouseEvent | FocusEvent} evt
  * @returns {boolean} Returns true if no errors detected, false otherwise
  */
 const errorsControl = (evt) => {
@@ -290,7 +308,7 @@ const usingConditionsConformity = () => {
 }
 /**
  * @function validate
- * @description Launch functions to check the conformity of all inputs form before validation
+ * @description Launch functions to check the conformity of values before validation and record a storage session if valid
  * @see {@link firstNameConformity}
  * @see {@link lastNameConformity}
  * @see {@link emailConformity}
@@ -310,15 +328,23 @@ const validate = (evt) => {
   quantityConformity();
   locationConformity();
   usingConditionsConformity();
+  if (errorsControl(evt)) {
+    sessionStorage.setItem('submittedForm', 'true');
 
-  return errorsControl(evt);
+    return true;
+  }
+
+  return false;
 };
 
 // DOM Elements
-const modalbg = document.querySelector(".bground");
+const modalbg = document.querySelector(".modal");
+const confirmationBg = document.querySelector(".confirmation");
+const confirmationBtn = document.getElementById("confirmation-btn");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const modalClose = document.querySelector(".close");
+const modalClose = document.getElementById("close-modal");
+const confirmationClose = document.getElementById("close-confirmation");
 const firstName = document.getElementById("first");
 const lastName = document.getElementById("last");
 const email = document.getElementById("email");
@@ -327,11 +353,13 @@ const birthdate = document.getElementById("birthdate");
 const eventLocation = document.getElementsByName("location");
 const usingConditions = document.getElementById("checkbox1");
 const submitBtn = document.getElementById("submit-btn");
-const formInputs = document.querySelector("input");
 
-// Modal window events
+// Modal and confirmation window events
+window.onload = launchConfirmation;
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 modalClose.addEventListener("click", closeModal);
+confirmationClose.addEventListener("click", closeConfirmation);
+confirmationBtn.addEventListener("click", closeConfirmation);
 submitBtn.addEventListener("click", (evt) => {
   validate(evt);
 });

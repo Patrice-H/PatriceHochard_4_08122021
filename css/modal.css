@@ -158,7 +158,6 @@ main {
 }
 
 .bground {
-  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -167,6 +166,15 @@ main {
   width: 100%;
   overflow: auto;
   background-color: rgba(26, 39, 156, 0.4);
+}
+.modal {
+  display: none;
+}
+.confirmation {
+  display: none;
+}
+.confirmation-body {
+  padding-bottom: 20px;
 }
 
 .content {
@@ -186,6 +194,16 @@ main {
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
+  /*display: none;*/
+}
+
+.confirmation-body p {
+  font-family: var(--font-default);
+  font-size: 36px;
+  font-weight: normal;
+  text-align: center;
+  width: 300px;
+  margin: 330px auto;
 }
 
 label {
