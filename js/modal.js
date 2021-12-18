@@ -1,165 +1,172 @@
 const errorMessages = {};
 
-const editNav = () => {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-};
 /**
- * @function launchModal
+ * @description edit the navigation menu in mobile format
+ */
+function editNav() {
+  if (topNav.className === "topnav") {
+    topNav.className += " responsive";
+  } else {
+    topNav.className = "topnav";
+  }
+}
+
+/**
  * @description Display the modal window
  */
-const launchModal = () => {
-  modalbg.style.display = "block";
-};
+function launchModal() {
+  modalBg.style.display = "block";
+}
+
 /**
- * @function closeModal
  * @description Close the modal window
  */
-const closeModal = () => {
-  modalbg.style.display = "none";
-};
+function closeModal() {
+  modalBg.style.display = "none";
+}
+
 /**
- * @function launchConfirmation
  * @description Read the storage session. If exists, display the confirmation window
  */
-const launchConfirmation = () => {
+function launchConfirmation() {
   let submittedForm = sessionStorage.getItem('submittedForm');
   if (submittedForm) {
     confirmationBg.style.display = "block";
   }
 }
+
 /**
- * @function closeConfirmation
  * @description Close the confirmation window and remove the storage session
  */
-const closeConfirmation = () => {
+function closeConfirmation() {
   confirmationBg.style.display = "none";
   sessionStorage.removeItem('submittedForm');
 }
-/**
- * @function displayErrorValidation
- * @description Display below specific input the error if condition is true
- * @param {HTMLElement} field 
- * @param {boolean} condition 
- * @param {string} key 
- */
-const displayErrorValidation = (field, condition, key = field.id) => {
-  if (condition) {
-    field.parentElement.dataset.error = errorMessages[key];
-    field.parentElement.dataset.errorVisible = "true";
-    field.parentElement.removeAttribute("data-valid-visible");
-  }
-  else {
-    delete errorMessages[key];
-    field.parentElement.removeAttribute("data-error");
-    field.parentElement.removeAttribute("data-error-visible");
-    field.parentElement.dataset.validVisible = "true";
-  }
-}
-/**
- * @function fillingControl
- * @description Control if a value is entered in input, generate a message otherwise
- * @see {@link displayErrorValidation}
- * @param {HTMLElement} field 
- * @returns {boolean} Return true if a value is entered, false otherwise
- */
-const fillingControl = (field) => {
-  if (field.value !== "") {
-    displayErrorValidation(field, false);
 
-    return true;
+/**
+ * @description Display error message below the input field
+ * @param {HTMLElement} field - The input field
+ * @param {string} key - The name of the field
+ * @returns {boolean} Return false
+ */
+function displayError(field, key = field.id) {
+  field.parentElement.dataset.error = errorMessages[key];
+  field.parentElement.dataset.errorVisible = "true";
+  field.parentElement.removeAttribute("data-valid-visible");
+
+  return false;
+}
+
+/**
+ * @description Display validation message below the input field
+ * @param {HTMLElement} field - The input field
+ * @param {string} key - The name of the field
+ * @returns {boolean} Return true 
+ */
+function displayValidation(field, key = field.id) {
+  delete errorMessages[key];
+  field.parentElement.removeAttribute("data-error");
+  field.parentElement.removeAttribute("data-error-visible");
+  field.parentElement.dataset.validVisible = "true";
+
+  return true;
+}
+
+/**
+ * @description Control if a value is entered in input, generate a message otherwise
+ * @see {@link displayValidation}
+ * @see {@link displayError}
+ * @param {HTMLElement} field - The input field
+ * @returns {boolean} The result of the return function: true if a value is entered, false otherwise
+ */
+function fillingControl(field) {
+  if (field.value !== "") {
+
+    return displayValidation(field);
   }
   errorMessages[field.id] = "Merci de renseigner votre " + field.labels[0].textContent.toLowerCase();
-  displayErrorValidation(field, true);
 
-  return false;
+  return displayError(field);
 }
-/**
- * @function lengthControl
- * @description Control if the input value matches to the minimum length, generate a message otherwise
- * @see {@link displayErrorValidation}
- * @param {HTMLElement} field 
- * @returns {boolean} Return true if the input value matches, false otherwise 
- */
-const lengthControl = (field) => {
-  if(field.value.length >= 2) {
-    displayErrorValidation(field, false);
 
-    return true;
+/**
+ * @description Control if the input value matches to the minimum length, generate a message otherwise
+ * @see {@link displayValidation}
+ * @see {@link displayError}
+ * @param {HTMLElement} field - The input field
+ * @returns {boolean} The result of the return function: true if the input value matches, false otherwise 
+ */
+function lengthControl(field) {
+  if(field.value.length >= 2) {
+
+    return displayValidation(field);
   }
   errorMessages[field.id] = "Veuillez entrer 2 caractères ou plus pour votre " + field.labels[0].textContent.toLowerCase();
-  displayErrorValidation(field, true);
 
-  return false;
-};
+  return displayError(field);
+}
+
 /**
- * @function emailFormatControl
  * @description Control if the input value matches with the pattern, generate a message otherwise
- * @see {@link displayErrorValidation}
- * @param {HTMLElement} field 
- * @returns {boolean} Return true if the input value matches, false otherwise
+ * @see {@link displayValidation}
+ * @see {@link displayError}
+ * @param {HTMLElement} field - The input field
+ * @returns {boolean} The result of the return function: true if the input value matches, false otherwise
  */
-const emailFormatControl = (field) => {
+function emailFormatControl(field) {
   const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/g;
   if (pattern.test(field.value)) {
-    displayErrorValidation(field, false);
 
-    return true;
+    return displayValidation(field);
   }
   errorMessages[field.id] = "Veuillez saisir un e-mail valide";
-  displayErrorValidation(field, true);
 
-  return false;
-};
+  return displayError(field);
+}
+
 /**
- * @function numericFormatControl
  * @description Control if the input value is a number, generate a message otherwise
- * @see {@link displayErrorValidation}
- * @param {HTMLElement} field 
- * @returns {boolean} Return true if the input value is a number, false otherwise
+ * @see {@link displayValidation}
+ * @see {@link displayError}
+ * @param {HTMLElement} field - The input field
+ * @returns {boolean} The result of the return function: true if the input value is a number, false otherwise
  */
-const numericFormatControl = (field) => {
+function numericFormatControl(field) {
   if (field.value !== "" && Number.isInteger(Number(field.value))) {
-    displayErrorValidation(field, false);
 
-    return true;
+    return displayValidation(field);
   }
   errorMessages[field.id] = "Veuillez saisir un nombre entier";
-  displayErrorValidation(field, true);
 
-  return false;
+  return displayError(field);
 }
+
 /**
- * @function letterFormatControl
  * @description Control if the input value matches with the pattern, generate a message otherwise
- * @see {@link displayErrorValidation}
- * @param {HTMLElement} field
- * @returns {boolean} Return true if the input value matches, false otherwise
+ * @see {@link displayValidation}
+ * @see {@link displayError}
+ * @param {HTMLElement} field - The input field
+ * @returns {boolean} The result of the return function: true if the input value matches, false otherwise
  */
-const letterFormatControl = (field) => {
+function letterFormatControl(field) {
   const pattern = /^[a-zA-Zäëïöüéè-]+$/;
   if (pattern.test(field.value)) {
-    displayErrorValidation(field, false);
 
-    return true;
+    return displayValidation(field);
   }
   errorMessages[field.id] = "Votre " + field.labels[0].textContent.toLowerCase() + " ne doit comporter que des lettres";
-  displayErrorValidation(field, true);
 
-  return false;
+  return displayError(field);
 }
+
 /**
- * @function dateFormatControl
  * @description Control if the input value matches with the pattern, generate a message otherwise
- * @see {@link displayErrorValidation}
- * @param {HTMLElement} field
- * @returns {boolean} Return true if the input value matches, false otherwise
+ * @see {@link displayValidation}
+ * @see {@link displayError}
+ * @param {HTMLElement} field - The input field
+ * @returns {boolean} The result of the return function: true if the input value matches, false otherwise
  */
-const dateFormatControl = (field) => {
+function dateFormatControl(field) {
   const pattern = /^\d{4}-(((0)[1-9])|((1)[0-2]))-([0-2][0-9]|(3)[0-1])$/;
   let birth = field.value;
   if (field.type === "text") {
@@ -169,60 +176,56 @@ const dateFormatControl = (field) => {
     birth = year + "-" + month + "-" + day;
   }
   if (pattern.test(birth)) {
-    displayErrorValidation(field, false);
 
-    return true;
+    return displayValidation(field);
   }
   errorMessages[field.id] = "Votre " + field.labels[0].textContent.toLowerCase() + " doit correspondre au format 'JJ/MM/AAAA'";
-  displayErrorValidation(field, true);
 
-  return false;
+  return displayError(field);
 }
+
 /**
- * @function locationSelectionControl
  * @description Control if a radio button is checked, generate a message otherwise
- * @see {@link displayErrorValidation}
- * @param {HTLMElement} field
- * @returns {boolean} Return true if a radio button is checked, false otherwise
+ * @see {@link displayValidation}
+ * @see {@link displayError}
+ * @param {HTLMElement} field - The input field
+ * @returns {boolean} The result of the return function: true if a radio button is checked, false otherwise
  */
-const locationSelectionControl = (field) => {
+function locationSelectionControl(field) {
   for (let i = 0; i < field.length; i++) {
     if (field[i].checked) {
-      displayErrorValidation(field[0], false, field[0].name);
 
-      return true;
+      return displayValidation(field[i], field[i].name);
     } 
   }
   errorMessages[field[0].name] = "Vous devez choisir un lieu";
-  displayErrorValidation(field[0], true, field[0].name);
 
-  return false;
+  return displayError(field[0], field[0].name);
 }
-/**
- * @function conditionApprovalControl
- * @description Control if the checkbox is checked, generate a message otherwise
- * @see {@link displayErrorValidation}
- * @param {HTMLElement} field
- * @returns {boolean} Return true if the checkbox is checked, false otherwise
- */
-const conditionsApprovalControl = (field) => {
-  if (field.checked) {
-    displayErrorValidation(field, false);
 
-    return true;
+/**
+ * @description Control if the checkbox is checked, generate a message otherwise
+ * @see {@link displayValidation}
+ * @see {@link displayError}
+ * @param {HTMLElement} field - The input field
+ * @returns {boolean} The result of the return function: true if the checkbox is checked, false otherwise
+ */
+function conditionsApprovalControl(field) {
+  if (field.checked) {
+
+    return displayValidation(field);
   }
   errorMessages[field.id] = "Vous devez approuver les conditions d'utilisation";
-  displayErrorValidation(field, true);
 
-  return false;
+  return displayError(field);
 }
+
 /**
- * @function errorsControl
  * @description Control the amount of errors of all inputs form
- * @param {MouseEvent | FocusEvent} evt
+ * @param {MouseEvent | FocusEvent | InputEvent} evt - Event
  * @returns {boolean} Returns true if no errors detected, false otherwise
  */
-const errorsControl = (evt) => {
+function errorsControl(evt) {
   if (Object.keys(errorMessages).length === 0) {
 
     return true;
@@ -230,84 +233,84 @@ const errorsControl = (evt) => {
   evt.preventDefault();
 
   return false;
-};
+}
+
 /**
- * @function firstNameConformity
- * @description Launch control functions to check the conformity of first name input
+ * @description Launch control functions to check the conformity of the first name input
  * @see {@link fillingControl}
  * @see {@link letterFormatControl}
  * @see {@link lengthControl}
  */
-const firstNameConformity = () => {
+function firstNameConformity() {
   if (fillingControl(firstName)) {
     if (letterFormatControl(firstName)) {
       lengthControl(firstName);
     }
   }
-};
+}
+
 /**
- * @function lastNameConformity
- * @description Launch control functions to check the conformity of last name input
+ * @description Launch control functions to check the conformity of the last name input
  * @see {@link fillingControl}
  * @see {@link letterFormatControl}
  * @see {@link lengthControl}
  */
-const lastNameConformity = () => {
+function lastNameConformity() {
   if (fillingControl(lastName)) {
     if (letterFormatControl(lastName)) {
       lengthControl(lastName);
     }
   }
-};
+}
+
 /**
- * @function emailConformity
- * @description Launch control functions to check the conformity of email input
+ * @description Launch control functions to check the conformity of the email input
  * @see {@link fillingControl}
  * @see {@link emailFormatControl}
  */
-const emailConformity = () => {
+function emailConformity() {
   if (fillingControl(email)) {
     emailFormatControl(email);
   }
-};
+}
+
 /**
- * @function birthDateConformity
- * @description Launch control functions to check the conformity of birthdate input
+ * @description Launch control functions to check the conformity of the birthdate input
  * @see {@link fillingControl}
  * @see {@link dateFormatControl}
  */
-const birthDateConformity = () => {
+function birthDateConformity() {
   if (fillingControl(birthdate)) {
     dateFormatControl(birthdate);
   }
   
 }
+
 /**
- * @function quantityConformity
- * @description Launch a control function to check the conformity of amount of participation input
+ * @description Launch a control function to check the conformity of the amount of participation input
  * @see {@link numericFormatControl}
  */
-const quantityConformity = () => {
+function quantityConformity() {
   numericFormatControl(quantity);
 }
+
 /**
- * @function locationConformity
- * @description Launch a control function to check the conformity of event location input
+ * @description Launch a control function to check the conformity of the event location input
  * @see {@link locationSelectionControl}
  */
-const locationConformity = () => {
+function locationConformity() {
   locationSelectionControl(eventLocation);
 }
+
 /**
- * @function usingConditionsConformity
- * @description Launch a control function to check the conformity of using conditions input
+ * @description Launch a control function to check the conformity of the using conditions input
  * @see {@link conditionsApprovalControl}
  */
-const usingConditionsConformity = () => {
+function usingConditionsConformity() {
   conditionsApprovalControl(usingConditions);
 }
+
 /**
- * @function validate
  * @description Launch functions to check the conformity of values before validation and record a storage session if valid
  * @see {@link firstNameConformity}
  * @see {@link lastNameConformity}
@@ -317,10 +320,10 @@ const usingConditionsConformity = () => {
  * @see {@link locationConformity}
  * @see {@link usingConditionsConformity}
  * @see {@link errorsControl}
- * @param {MouseEvent} evt
+ * @param {MouseEvent} evt - Event
  * @returns {boolean}  Result of the returned function
  */
-const validate = (evt) => {
+function validate(evt) {
   firstNameConformity();
   lastNameConformity();
   emailConformity();
@@ -335,10 +338,12 @@ const validate = (evt) => {
   }
 
   return false;
-};
+}
 
 // DOM Elements
-const modalbg = document.querySelector(".modal");
+const topNav = document.getElementById("myTopnav");
+const navIcon = document.getElementById("navicon");
+const modalBg = document.querySelector(".modal");
 const confirmationBg = document.querySelector(".confirmation");
 const confirmationBtn = document.getElementById("confirmation-btn");
 const modalBtn = document.querySelectorAll(".modal-btn");
@@ -356,13 +361,17 @@ const submitBtn = document.getElementById("submit-btn");
 
 // Modal and confirmation window events
 window.onload = launchConfirmation;
+navIcon.addEventListener("click", editNav);
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 modalClose.addEventListener("click", closeModal);
+
 confirmationClose.addEventListener("click", closeConfirmation);
 confirmationBtn.addEventListener("click", closeConfirmation);
+
 submitBtn.addEventListener("click", (evt) => {
   validate(evt);
 });
+
 firstName.addEventListener("focus", (evt) => {
   firstNameConformity();
   errorsControl(evt);
@@ -371,6 +380,7 @@ firstName.addEventListener("input", (evt) => {
   firstNameConformity();
   errorsControl(evt);
 });
+
 lastName.addEventListener("focus", (evt) => {
   lastNameConformity();
   errorsControl(evt);
@@ -379,6 +389,7 @@ lastName.addEventListener("input", (evt) => {
   lastNameConformity();
   errorsControl(evt);
 });
+
 email.addEventListener("focus", (evt) => {
   emailConformity();
   errorsControl(evt);
@@ -387,6 +398,7 @@ email.addEventListener("input", (evt) => {
   emailConformity();
   errorsControl(evt);
 });
+
 birthdate.addEventListener("focus", (evt) => {
   birthDateConformity();
   errorsControl(evt);
@@ -395,6 +407,7 @@ birthdate.addEventListener("input", (evt) => {
   birthDateConformity();
   errorsControl(evt);
 });
+
 quantity.addEventListener("focus", (evt) => {
   quantityConformity();
   errorsControl(evt);
@@ -403,12 +416,14 @@ quantity.addEventListener("input", (evt) => {
   quantityConformity();
   errorsControl(evt);
 });
+
 for (let i = 0; i < eventLocation.length; i++) {
   eventLocation[i].addEventListener("change", (evt) => {
     locationConformity();
     errorsControl(evt);
   });
 }
+
 usingConditions.addEventListener("change", (evt) => {
   usingConditionsConformity();
   errorsControl(evt);
