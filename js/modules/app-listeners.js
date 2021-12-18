@@ -11,59 +11,47 @@ submitBtn.addEventListener("click", (evt) => {
   validate(evt);
 });
 
-firstName.addEventListener("focus", (evt) => {
+firstName.addEventListener("focus", () => {
   firstNameConformity();
-  errorsControl(evt);
 });
-firstName.addEventListener("input", (evt) => {
+firstName.addEventListener("input", () => {
   firstNameConformity();
-  errorsControl(evt);
 });
 
-lastName.addEventListener("focus", (evt) => {
+lastName.addEventListener("focus", () => {
   lastNameConformity();
-  errorsControl(evt);
 });
-lastName.addEventListener("input", (evt) => {
+lastName.addEventListener("input", () => {
   lastNameConformity();
-  errorsControl(evt);
 });
 
-email.addEventListener("focus", (evt) => {
+email.addEventListener("focus", () => {
   emailConformity();
-  errorsControl(evt);
 });
-email.addEventListener("input", (evt) => {
+email.addEventListener("input", () => {
   emailConformity();
-  errorsControl(evt);
 });
 
-birthdate.addEventListener("focus", (evt) => {
+birthdate.addEventListener("focus", () => {
   birthDateConformity();
-  errorsControl(evt);
 });
-birthdate.addEventListener("input", (evt) => {
+birthdate.addEventListener("input", () => {
   birthDateConformity();
-  errorsControl(evt);
 });
 
-quantity.addEventListener("focus", (evt) => {
+quantity.addEventListener("focus", () => {
   quantityConformity();
-  errorsControl(evt);
 });
-quantity.addEventListener("input", (evt) => {
+quantity.addEventListener("input", () => {
   quantityConformity();
-  errorsControl(evt);
 });
 
 for (let i = 0; i < eventLocation.length; i++) {
-  eventLocation[i].addEventListener("change", (evt) => {
+  eventLocation[i].addEventListener("change", () => {
     locationConformity();
-    errorsControl(evt);
   });
 }
 
-usingConditions.addEventListener("change", (evt) => {
+usingConditions.addEventListener("change", () => {
   usingConditionsConformity();
-  errorsControl(evt);
 });

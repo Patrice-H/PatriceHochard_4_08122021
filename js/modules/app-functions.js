@@ -220,7 +220,7 @@ function conditionsApprovalControl(field) {
   
 /**
  * @description Control the amount of errors of all inputs form
- * @param {MouseEvent | FocusEvent | InputEvent} evt - Event
+ * @param {MouseEvent} evt - Event
  * @returns {boolean} Returns true if no errors detected, false otherwise
  */
 function errorsControl(evt) {
@@ -281,7 +281,6 @@ function birthDateConformity() {
     if (fillingControl(birthdate)) {
         dateFormatControl(birthdate);
     }
-    
 }
   
 /**
