@@ -69,6 +69,17 @@ function displayValidation(field, key = field.id) {
   
     return true;
 }
+
+/**
+ * @description Reset error message below the input field
+ * @param {HTMLElement} field - The input field
+ */
+function resetError(field) {
+    delete errorMessages[field.id];
+    field.parentElement.removeAttribute("data-error");
+    field.parentElement.removeAttribute("data-error-visible");
+    field.parentElement.removeAttribute("data-valid-visible");
+}
   
 /**
  * @description Control if a value is entered in input, generate a message otherwise

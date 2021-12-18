@@ -181,7 +181,16 @@ input {
   opacity: 0;
   transition: 0.3s;
 }
-/*.formData.bottom[data-error]::after {*/
+.formData i {
+  display: block;
+  font-size: 0.5em;
+  color: #279e7a;
+  margin-top: 7px;
+  margin-bottom: -30px;
+  text-align: right;
+  line-height: 0.3;
+  opacity: 0;
+}
 .formData.bottom::after {
   margin-top: -13px;
   margin-bottom: 10px;
@@ -193,18 +202,17 @@ input {
 .formData[data-error-visible="true"]::after {
   opacity: 1;
 }
-.formData[data-error-visible="true"] .text-control {
-  border: 2px solid #e54858;
+.formData .text-control {
+  border: 2px solid;
 }
-.formData i {
-  display: block;
-  font-size: 0.5em;
-  color: #279e7a;
-  margin-top: 7px;
-  margin-bottom: -30px;
-  text-align: right;
-  line-height: 0.3;
-  opacity: 0;
+.formData[data-error-visible="true"] .text-control {
+  border-color:#e54858;
+}
+.formData[data-valid-visible="true"] .text-control {
+  border-color:#279e7a;
+}
+.formData input.text-control:focus {
+  border-color:#3876ac;
 }
 .formData.bottom i {
   margin-top: -1px;
@@ -212,9 +220,6 @@ input {
 }
 .formData[data-valid-visible="true"] i {
   opacity: 1;
-}
-.formData[data-valid-visible="true"] .text-control {
-  border: 2px solid #279e7a;
 }
 .formData-field label {
   padding-top: 6px;

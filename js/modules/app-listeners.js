@@ -8,50 +8,50 @@ confirmationClose.addEventListener("click", closeConfirmation);
 confirmationBtn.addEventListener("click", closeConfirmation);
 
 submitBtn.addEventListener("click", (evt) => {
-  validate(evt);
+    validate(evt);
 });
 
 firstName.addEventListener("focus", () => {
-  firstNameConformity();
-});
-firstName.addEventListener("input", () => {
-  firstNameConformity();
+    resetError(firstName);
+  });
+firstName.addEventListener("blur", () => {
+    firstNameConformity();
 });
 
 lastName.addEventListener("focus", () => {
-  lastNameConformity();
+    resetError(lastName);
 });
-lastName.addEventListener("input", () => {
-  lastNameConformity();
+lastName.addEventListener("blur", () => {
+    lastNameConformity();
 });
 
 email.addEventListener("focus", () => {
-  emailConformity();
+    resetError(email);
 });
-email.addEventListener("input", () => {
-  emailConformity();
+email.addEventListener("blur", () => {
+    emailConformity();
 });
 
 birthdate.addEventListener("focus", () => {
-  birthDateConformity();
+    resetError(birthdate);
 });
-birthdate.addEventListener("input", () => {
-  birthDateConformity();
+birthdate.addEventListener("blur", () => {
+    birthDateConformity();
 });
 
 quantity.addEventListener("focus", () => {
-  quantityConformity();
+    resetError(quantity);
 });
-quantity.addEventListener("input", () => {
-  quantityConformity();
+quantity.addEventListener("blur", () => {
+    quantityConformity();
 });
 
 for (let i = 0; i < eventLocation.length; i++) {
-  eventLocation[i].addEventListener("change", () => {
-    locationConformity();
-  });
+    eventLocation[i].addEventListener("change", () => {
+        locationConformity();
+    });
 }
 
 usingConditions.addEventListener("change", () => {
-  usingConditionsConformity();
+    usingConditionsConformity();
 });
