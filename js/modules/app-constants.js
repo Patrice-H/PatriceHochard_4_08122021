@@ -1,6 +1,7 @@
 const errorMessages = {};
 
 // DOM Elements
+const body = document.querySelector("body");
 const topNav = document.getElementById("myTopnav");
 const navIcon = document.getElementById("navicon");
 const modalBg = document.querySelector(".modal");

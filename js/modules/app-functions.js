@@ -14,6 +14,7 @@ function editNav() {
  */
 function launchModal() {
     modalBg.style.display = "block";
+    body.style.overflow = "hidden";
 }
   
 /**
@@ -21,6 +22,7 @@ function launchModal() {
  */
 function closeModal() {
     modalBg.style.display = "none";
+    body.style.overflow = "initial";
 }
   
 /**

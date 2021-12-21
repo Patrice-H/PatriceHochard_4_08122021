@@ -151,7 +151,7 @@ main {
 }
 label {
   font-family: var(--font-default);
-  font-size: 17px;
+  font-size: 14px;
   font-weight: normal;
   display: inline-block;
   margin-bottom: 11px;
@@ -170,11 +170,12 @@ input {
   height: 48px;
 }
 .formData[data-error]::after {
+  font-family: "Roboto";
   content: attr(data-error);
-  font-size: 0.4em;
+  font-size: 0.5em;
   color: #e54858;
   display: block;
-  text-align: right;
+  text-align: left;
   margin-top: -10px;
   margin-bottom: 7px;
   line-height: 0.3;
@@ -183,21 +184,22 @@ input {
 }
 .formData i {
   display: block;
-  font-size: 0.5em;
+  font-size: 0.625em;
   color: #279e7a;
   margin-top: 7px;
   margin-bottom: -30px;
-  text-align: right;
+  text-align: left;
   line-height: 0.3;
   opacity: 0;
 }
 .formData.bottom::after {
-  margin-top: -13px;
-  margin-bottom: 10px;
+  margin-top: -8px;
+  margin-bottom: 5px;
+  margin-left: 7px;
 }
 .formData-field.formData[data-error]::after {
   margin-top: 0px;
-  margin-bottom: -3px;
+  margin-bottom: -3.5px;
 }
 .formData[data-error-visible="true"]::after {
   opacity: 1;
@@ -215,8 +217,9 @@ input {
   border-color:#3876ac;
 }
 .formData.bottom i {
-  margin-top: -1px;
-  margin-bottom: -22px;
+  margin-top: 2px;
+  margin-bottom: -25px;
+  margin-left: 7px;
 }
 .formData[data-valid-visible="true"] i {
   opacity: 1;
@@ -387,7 +390,8 @@ input {
 /* custom select end */
 .text-label {
   font-weight: normal;
-  font-size: 16px;
+  font-size: 14px;
+  margin-top: 6px;
 }
 .hero-section {
   min-height: 93vh;
