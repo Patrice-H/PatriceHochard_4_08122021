@@ -92,7 +92,6 @@ function resetError(field) {
  */
 function fillingControl(field) {
     if (field.value !== "") {
-  
         return displayValidation(field);
     }
     errorMessages[field.id] = "Merci de renseigner votre " + field.labels[0].textContent.toLowerCase();
@@ -109,7 +108,6 @@ function fillingControl(field) {
  */
 function lengthControl(field) {
     if(field.value.length >= 2) {
-  
         return displayValidation(field);
     }
     errorMessages[field.id] = "Veuillez entrer 2 caractères ou plus pour votre " + field.labels[0].textContent.toLowerCase();
@@ -127,7 +125,6 @@ function lengthControl(field) {
 function emailFormatControl(field) {
     const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/g;
     if (pattern.test(field.value)) {
-  
         return displayValidation(field);
     }
     errorMessages[field.id] = "Veuillez saisir un e-mail valide";
@@ -144,7 +141,6 @@ function emailFormatControl(field) {
  */
 function numericFormatControl(field) {
     if (field.value !== "" && Number.isInteger(Number(field.value))) {
-  
         return displayValidation(field);
     }
     errorMessages[field.id] = "Veuillez saisir un nombre entier";
@@ -162,7 +158,6 @@ function numericFormatControl(field) {
 function letterFormatControl(field) {
     const pattern = /^[a-zA-Zäëïöüéè-]+$/;
     if (pattern.test(field.value)) {
-  
         return displayValidation(field);
     }
     errorMessages[field.id] = "Votre " + field.labels[0].textContent.toLowerCase() + " ne doit comporter que des lettres";
@@ -187,7 +182,6 @@ function dateFormatControl(field) {
         birth = year + "-" + month + "-" + day;
     }
     if (pattern.test(birth)) {
-  
         return displayValidation(field);
     }
     errorMessages[field.id] = "Votre " + field.labels[0].textContent.toLowerCase() + " doit correspondre au format 'JJ/MM/AAAA'";
@@ -205,7 +199,6 @@ function dateFormatControl(field) {
 function locationSelectionControl(field) {
     for (let i = 0; i < field.length; i++) {
         if (field[i].checked) {
-  
             return displayValidation(field[i], field[i].name);
         } 
     }
@@ -223,7 +216,6 @@ function locationSelectionControl(field) {
  */
 function conditionsApprovalControl(field) {
     if (field.checked) {
-  
         return displayValidation(field);
     }
     errorMessages[field.id] = "Vous devez approuver les conditions d'utilisation";
@@ -238,7 +230,6 @@ function conditionsApprovalControl(field) {
  */
 function errorsControl(evt) {
     if (Object.keys(errorMessages).length === 0) {
-  
         return true;
     }
     evt.preventDefault();
