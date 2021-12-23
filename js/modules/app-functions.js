@@ -30,7 +30,7 @@ function closeModal() {
  */
 function launchConfirmation() {
     let submittedForm = sessionStorage.getItem('submittedForm');
-    if (submittedForm) {
+    if (submittedForm === "true") {
         confirmationBg.style.display = "block";
     }
 }
