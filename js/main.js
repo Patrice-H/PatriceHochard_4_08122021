@@ -7,7 +7,7 @@ function loadScripts() {
     scripts.forEach(script => {
         let node = document.createElement('script');
         appScripts.append(node);
-        appScripts.lastChild.setAttribute('src', './js/modules/app-' + script + '.js');
+        appScripts.lastChild.setAttribute('src', './js/modules/app-' + script + '-min.js');
     });
 }
 
